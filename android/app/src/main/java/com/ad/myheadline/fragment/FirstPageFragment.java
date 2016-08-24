@@ -1,6 +1,9 @@
 package com.ad.myheadline.fragment;
 
+import android.app.IntentService;
 import android.app.ListFragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +17,10 @@ import com.ad.myheadline.adapter.MyCardAdapter;
 import com.ad.myheadline.R;
 import com.ad.myheadline.model.NewsLab;
 import com.ad.myheadline.network.ApiRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +42,11 @@ public class FirstPageFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myAdapter = new MyCardAdapter(getActivity(),getItems());
+        try {
+            myAdapter = new MyCardAdapter(getActivity(),getItems());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         setListAdapter(myAdapter);
     }
 
@@ -46,25 +57,43 @@ public class FirstPageFragment extends ListFragment {
     }
     /*
     初始化获取每一个item的方法
-    TODO:网络请求获取信息
      */
-    private List<MyCard> getItems() {
+    private List<MyCard> getItems() throws JSONException {
         List<MyCard> myCards = new ArrayList<MyCard>();
-        ArrayList<String> labels = new ArrayList<String>();
-        labels.add("label1");
-        labels.add("label2");
-        labels.add("label3");
-        for (int i = 0;i < 1; i++) {
-            MyCard card = new MyCard("Title" + i,"content\ncontent\ncontent","2016/8/20",labels);
-            myCards.add(card);
-        }
-        String text = "1";
-        Runnable r = new ApiRequest(0);
+        Runnable r = new ApiRequest(0,NewsLab.get().getKeyword());
         Thread t = new Thread(r);
         t.start();
 
-        MyCard card2 = new MyCard("T", NewsLab.get().getS(),"2",labels);
-        myCards.add(card2);
+        String content = NewsLab.get().getKeywordQureyResult();
+        if (content != "" && content != null) {
+            JSONArray jsonArray = new JSONArray(content);
+            for (int i = jsonArray.length() - 1; i >= 0; i--) {
+                JSONObject ob = jsonArray.getJSONObject(i);
+                ArrayList<String> labels = new ArrayList();
+                JSONArray labelArray = ob.getJSONArray("labels");
+                for (int j = 0;j < 3; j++) {
+                    labels.add(labelArray.getString(j));
+                }
+                MyCard card = new MyCard("新闻",ob.getString("title"),ob.getString("time"),labels,ob.getString("href"));
+                myCards.add(card);
+
+            }
+        }
         return myCards;
+    }
+
+
+
+    /*
+    解析Unicode
+     */
+    public static String unicode2String(String unicode) {
+        StringBuffer string = new StringBuffer();
+        String[] hex = unicode.split("\\\\u");
+        for (int i = 0; i < hex.length; i++) {
+            int data = Integer.parseInt(hex[i],16);
+            string.append((char)data);
+        }
+        return string.toString();
     }
 }
