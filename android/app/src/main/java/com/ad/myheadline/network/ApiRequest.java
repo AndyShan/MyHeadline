@@ -1,6 +1,9 @@
 package com.ad.myheadline.network;
 
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.ad.myheadline.model.NewsLab;
@@ -8,34 +11,49 @@ import com.ad.myheadline.model.NewsLab;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by AD on 2016/8/23.
  */
-public class ApiRequest implements Runnable {
+public class ApiRequest extends Activity implements Runnable {
 
     private int api_code;
-    public ApiRequest(int api_code) {
+    private String keyword;
+    public ApiRequest(int api_code,String keyword) {
         this.api_code = api_code;
+        this.keyword = keyword;
     }
     @Override
     public void run() {
         if (api_code == 0) {
-            String s = getRequest("http://192.168.1.104:5000/api/v1.0/keyword/%E5%BC%A0%E7%BB%A7%E7%A7%91");
-//TODO:获得信息后更新NewsLab单例。
-            Log.d("s",s);
-            NewsLab.get().setS(s);
+            String s = null;
+
+            try {
+                s = getRequestKeyWord(keyword);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            NewsLab.get().setKeywordQureyResult(s);
         }
     }
 
     /*
     发送获取keyword信息的get请求
-    TODO:不同形式的get请求
      */
-    private String getRequestKeyWord(String keyword) {
-        return null;
+    private String getRequestKeyWord(String keyword) throws UnsupportedEncodingException {
+        String result = "";
+        if (keyword != null) {
+            Log.d("word",keyword);
+            Log.d("keyword",URLEncoder.encode(keyword.trim(),"utf-8"));
+            String url = "http://192.168.1.104:5000/api/v1.0/keyword/" + URLEncoder.encode(keyword.trim(), "utf-8").replace("+","%20");
+            Log.d("url",url);
+            result = getRequest(url);
+        }
+        return result;
     }
 
     /*
