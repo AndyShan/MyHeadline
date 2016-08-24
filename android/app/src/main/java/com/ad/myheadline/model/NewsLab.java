@@ -6,15 +6,9 @@ package com.ad.myheadline.model;
 public class NewsLab {
     private static NewsLab newsLab;
     private MyCard[] myCards;
-    private String s;
+    private String keywordQureyResult;
+    private String keyword;
 
-    public String getS() {
-        return s;
-    }
-
-    public void setS(String s) {
-        this.s = s;
-    }
 
     private NewsLab() {
 
@@ -32,5 +26,21 @@ public class NewsLab {
 
     public void setMyCards(MyCard[] myCards) {
         this.myCards = myCards;
+    }
+
+    public String getKeywordQureyResult() {
+        return keywordQureyResult;
+    }
+
+    public void setKeywordQureyResult(String keywordQureyResult) {
+        this.keywordQureyResult = keywordQureyResult;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }
