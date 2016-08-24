@@ -10,11 +10,13 @@ public class MyCard {
     private String mContent;
     private String mDate;
     private ArrayList<String> mLabels;
-    public MyCard(String mTitle,String mContent,String mDate,ArrayList<String> mLabels) {
+    private String mHref;
+    public MyCard(String mTitle,String mContent,String mDate,ArrayList<String> mLabels,String mHref) {
         this.mTitle = mTitle;
         this.mContent = mContent;
         this.mDate = mDate;
         this.mLabels = mLabels;
+        this.mHref = mHref;
     }
 
     public String getmTitle() {
@@ -47,5 +49,13 @@ public class MyCard {
 
     public void setmLabels(ArrayList<String> mLabels) {
         this.mLabels = mLabels;
+    }
+
+    public String getmHref() {
+        return mHref;
+    }
+
+    public void setmHref(String mHref) {
+        this.mHref = mHref;
     }
 }
