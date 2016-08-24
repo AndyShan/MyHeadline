@@ -5,16 +5,19 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.ad.myheadline.R;
 import com.ad.myheadline.adapter.KeyWordAdapter;
 import com.ad.myheadline.adapter.RecommendWordAdapter;
 import com.ad.myheadline.model.KeyWord;
+import com.ad.myheadline.model.NewsLab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +64,7 @@ public class KeyWordActivity extends AppCompatActivity {
     private void initKeyWord() {
         SharedPreferences share = getSharedPreferences("keyword",Context.MODE_PRIVATE);
         String word = share.getString("word","");
+        NewsLab.get().setKeyword(word);
         String[] words = word.split(" ");
         List<KeyWord> mWords = new ArrayList<>();
         for (String i : words) {
