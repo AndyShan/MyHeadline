@@ -12,15 +12,8 @@
     tools:context=".activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <include
-        android:id="@+id/bottombar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        layout="@layout/bottombar" />
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@id/bottombar"/>
+        android:layout_height="fill_parent" />
 </RelativeLayout>

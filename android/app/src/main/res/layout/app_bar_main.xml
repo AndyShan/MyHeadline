@@ -23,5 +23,13 @@
 
     <include layout="@layout/content_main" />
 
+    <com.srx.widget.TabBarView
+        android:id="@+id/tabBarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="15dp"
+        />
+
 
 </android.support.design.widget.CoordinatorLayout>
