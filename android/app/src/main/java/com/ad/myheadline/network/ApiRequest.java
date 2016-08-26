@@ -47,9 +47,7 @@ public class ApiRequest extends Activity implements Runnable {
     private String getRequestKeyWord(String keyword) throws UnsupportedEncodingException {
         String result = "";
         if (keyword != null) {
-            Log.d("word",keyword);
-            Log.d("keyword",URLEncoder.encode(keyword.trim(),"utf-8"));
-            String url = "http://192.168.1.104:5000/api/v1.0/keyword/" + URLEncoder.encode(keyword.trim(), "utf-8").replace("+","%20");
+            String url = "http://192.168.0.108:5000/api/v1.0/keyword/" + URLEncoder.encode(keyword.trim(), "utf-8").replace("+","%20");
             Log.d("url",url);
             result = getRequest(url);
         }

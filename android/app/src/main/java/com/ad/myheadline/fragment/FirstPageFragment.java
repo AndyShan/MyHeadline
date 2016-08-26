@@ -41,9 +41,12 @@ public class FirstPageFragment extends ListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("onCeate","True");
         super.onCreate(savedInstanceState);
         try {
-            myAdapter = new MyCardAdapter(getActivity(),getItems());
+            List<MyCard> myCards = getItems();
+            Log.d("size",myCards.size() + "");
+            myAdapter = new MyCardAdapter(getActivity(),myCards);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -60,6 +63,7 @@ public class FirstPageFragment extends ListFragment {
      */
     private List<MyCard> getItems() throws JSONException {
         List<MyCard> myCards = new ArrayList<MyCard>();
+        Log.d("get","true");
         Runnable r = new ApiRequest(0,NewsLab.get().getKeyword());
         Thread t = new Thread(r);
         t.start();

@@ -1,8 +1,11 @@
 package com.ad.myheadline.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,27 +20,28 @@ import android.widget.ImageButton;
 import com.ad.myheadline.R;
 import com.ad.myheadline.fragment.FirstPageFragment;
 import com.ad.myheadline.fragment.HotPageFragment;
+import com.ad.myheadline.model.NewsLab;
+import com.srx.widget.TabBarView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
-    private ImageButton firstPageButton;
-    private ImageButton hotPageButton;
+        implements NavigationView.OnNavigationItemSelectedListener {
     private FirstPageFragment firstPageFragment;
     private HotPageFragment hotPageFragment;
+    private TabBarView mTabBarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        firstPageButton = (ImageButton)findViewById(R.id.button1);
-        hotPageButton = (ImageButton)findViewById(R.id.button2);
-        firstPageButton.setOnClickListener(this);
-        hotPageButton.setOnClickListener(this);
+        SharedPreferences share = getSharedPreferences("keyword", Context.MODE_PRIVATE);
+        NewsLab.get().setKeyword(share.getString("word",""));
 
         setDefaultFragment();
 
+        initTabBarView();
+
+        mTabBarView.setOnTabBarClickListener(initTabBarClickListener());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -104,7 +108,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
-
+            Intent i = new Intent(MainActivity.this,ScrollingActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -119,31 +124,77 @@ public class MainActivity extends AppCompatActivity
         transaction.replace(R.id.content,firstPageFragment);
         transaction.commit();
     }
-    @Override
-    public void onClick(View v)
-    {
-        android.app.FragmentManager fm = getFragmentManager();
-        // 开启Fragment事务
-        FragmentTransaction transaction = fm.beginTransaction();
 
-        switch (v.getId())
-        {
-            case R.id.button1:
-                if (firstPageFragment == null)
-                {
-                    firstPageFragment = new FirstPageFragment();
+    private void initTabBarView() {
+        mTabBarView = (TabBarView)findViewById(R.id.tabBarView);
+        mTabBarView.setMainBitmap(R.drawable.plus_icon);
+        mTabBarView.bindBtnsForPage(0, R.drawable.nearby_icon, R.drawable.refresh_icon, R.drawable.edit_icon);
+        mTabBarView.bindBtnsForPage(1, R.drawable.profile_icon, R.drawable.edit_icon, 0);
+        mTabBarView.bindBtnsForPage(2, R.drawable.chats_icon, R.drawable.search_icon, 0);
+        mTabBarView.bindBtnsForPage(3, R.drawable.settings_icon, 0, R.drawable.edit_icon);
+        mTabBarView.initializePage(0);
+
+    }
+
+    private TabBarView.OnTabBarClickListener initTabBarClickListener(){
+        return new TabBarView.OnTabBarClickListener() {
+            @Override
+            public void onMainBtnsClick(int position, int[] clickLocation) {
+                android.app.FragmentManager fm = getFragmentManager();
+                // 开启Fragment事务
+                FragmentTransaction transaction = fm.beginTransaction();
+
+                switch (position) {
+                    case 0:
+                        if (firstPageFragment == null)
+                        {
+                            firstPageFragment = new FirstPageFragment();
+                        }
+                        // 使用当前Fragment的布局替代content的控件
+                        transaction.replace(R.id.content, firstPageFragment);
+                        break;
+                    case 1:
+                        if (hotPageFragment == null)
+                        {
+                            hotPageFragment = new HotPageFragment();
+                        }
+                        transaction.replace(R.id.content, hotPageFragment);
+                        break;
                 }
-                // 使用当前Fragment的布局替代content的控件
-                transaction.replace(R.id.content, firstPageFragment);
-                break;
-            case R.id.button2:
-                if (hotPageFragment == null)
-                {
-                    hotPageFragment = new HotPageFragment();
+                transaction.commit();
+
+            }
+
+            @Override
+            public void onMainBtnsClick(int position) {
+
+            }
+
+            @Override
+            public void onLeftBtnClick(int page) {
+                android.app.FragmentManager fm = getFragmentManager();
+                // 开启Fragment事务
+                FragmentTransaction transaction = fm.beginTransaction();
+
+                switch (page) {
+                    case 0:
+                        firstPageFragment = new FirstPageFragment();
+                        // 使用当前Fragment的布局替代content的控件
+                        transaction.replace(R.id.content, firstPageFragment);
+                        break;
                 }
-                transaction.replace(R.id.content, hotPageFragment);
-                break;
-        }
-        transaction.commit();
+                transaction.commit();
+
+            }
+
+            @Override
+            public void onRightBtnClick(int page) {
+                switch (page) {
+                    case 0:
+                        Intent i = new Intent(MainActivity.this,KeyWordActivity.class);
+                        startActivity(i);
+                }
+            }
+        };
     }
 }
