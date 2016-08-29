@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,6 +21,7 @@ import android.widget.ImageButton;
 import com.ad.myheadline.R;
 import com.ad.myheadline.fragment.FirstPageFragment;
 import com.ad.myheadline.fragment.HotPageFragment;
+import com.ad.myheadline.fragment.LabelsFragment;
 import com.ad.myheadline.model.NewsLab;
 import com.srx.widget.TabBarView;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirstPageFragment firstPageFragment;
     private HotPageFragment hotPageFragment;
+    private LabelsFragment labelsFragment;
     private TabBarView mTabBarView;
 
     @Override
@@ -143,7 +146,7 @@ public class MainActivity extends AppCompatActivity
                 android.app.FragmentManager fm = getFragmentManager();
                 // 开启Fragment事务
                 FragmentTransaction transaction = fm.beginTransaction();
-
+                Log.d("position",position + "");
                 switch (position) {
                     case 0:
                         if (firstPageFragment == null)
@@ -159,6 +162,13 @@ public class MainActivity extends AppCompatActivity
                             hotPageFragment = new HotPageFragment();
                         }
                         transaction.replace(R.id.content, hotPageFragment);
+                        break;
+                    case 3:
+                        if (labelsFragment == null)
+                        {
+                            labelsFragment = new LabelsFragment();
+                        }
+                        transaction.replace(R.id.content,labelsFragment);
                         break;
                 }
                 transaction.commit();
