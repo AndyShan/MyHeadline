@@ -12,6 +12,7 @@ sys.setdefaultencoding('utf-8')
 
 yuele_Url = 'http://yule.baidu.com/'
 caijing_Url = 'http://finance.baidu.com/'
+fashion_Url = 'http://fashion.baidu.com/'
 
 
 def yule():
@@ -49,6 +50,24 @@ def caijing():
         f.write(str(title) + '\t' + str(label) + '\t' + data + '\t' + href + '\n')
 
 
+def fashion():
+    f = open('hehe.txt','a')
+    content = urllib2.urlopen(fashion_Url).read()
+    soup = BeautifulSoup(content, from_encoding = 'gbk')
+    fashion_News = soup.find_all('ul', {'class', 'news-title-list'})[0].find_all('li')
+
+    for i in fashion_News:
+        title = i.a.text.decode()
+        labels = get_keyword(i.a.text)
+        data = str(GetNowTime())
+        href = i.a['href']
+        label = '时尚,'
+        for i in range(len(labels) - 1):
+            label += str(labels[i]) + ','
+        label += labels[len(labels) - 1]
+        f.write(str(title).replace("\n","") + '\t' + str(label) + '\t' + data + '\t' + href + '\n')
+
+
 def search(content):
     url = "http://news.baidu.com/ns?word=" + content + "&bs=%D6%D0%B9%FA%C5%AE%C5%C5&sr=0&cl=2&rn=20&tn=news&ct=0&clk=sortbytime"
     content = urllib2.urlopen(url).read()
@@ -69,19 +88,8 @@ def GetNowTime():
     return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
 
 if __name__ == "__main__":
-    # index = 0
     # while True:
-    #     print index
-    #     print "*****************爬取中*****************"
-    #     f = open('hehe.txt','a')
-    #     news = []
-    #     news.append(yule())
-    #     news.append(caijing())
-    #     print "*****************写入中*****************"
-    #     f.write(json.dumps(news) + '\n')
-    #     print "*****************等待中*****************"
+    #     yule()
+    #     caijing()
     #     time.sleep(60 * 60)
-    #     index += 1
-    # print search('李晓霞')
-    yule()
-    caijing()
+    fashion()
