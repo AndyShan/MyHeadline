@@ -21,6 +21,7 @@
         <activity android:name=".activity.KeyWordActivity"></activity>
         <activity android:name=".activity.ScrollingActivity"></activity>
         <activity android:name=".activity.UploadActivity"></activity>
+        <activity android:name=".activity.SurfActivity"></activity>
     </application>
 
 </manifest>

@@ -22,11 +22,12 @@ import com.ad.myheadline.R;
 import com.ad.myheadline.fragment.FirstPageFragment;
 import com.ad.myheadline.fragment.HotPageFragment;
 import com.ad.myheadline.fragment.LabelsFragment;
+import com.ad.myheadline.model.MyCard;
 import com.ad.myheadline.model.NewsLab;
 import com.srx.widget.TabBarView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener ,FirstPageFragment.onFirstPageCallBack{
     private FirstPageFragment firstPageFragment;
     private HotPageFragment hotPageFragment;
     private LabelsFragment labelsFragment;
@@ -122,11 +123,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setDefaultFragment() {
-        android.app.FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
         firstPageFragment = new FirstPageFragment();
-        transaction.replace(R.id.content,firstPageFragment);
-        transaction.commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.content,firstPageFragment).commit();
     }
 
     private void initTabBarView() {
@@ -144,9 +142,7 @@ public class MainActivity extends AppCompatActivity
         return new TabBarView.OnTabBarClickListener() {
             @Override
             public void onMainBtnsClick(int position, int[] clickLocation) {
-                android.app.FragmentManager fm = getFragmentManager();
-                // 开启Fragment事务
-                FragmentTransaction transaction = fm.beginTransaction();
+                android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 Log.d("position",position + "");
                 switch (position) {
                     case 0:
@@ -183,9 +179,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onLeftBtnClick(int page) {
-                android.app.FragmentManager fm = getFragmentManager();
-                // 开启Fragment事务
-                FragmentTransaction transaction = fm.beginTransaction();
+                android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                 switch (page) {
                     case 0:
@@ -207,5 +201,13 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
+    }
+
+    @Override
+    public void onFirstCallBack(MyCard mCard) {
+        String url = mCard.getmHref();
+        Intent i = new Intent(MainActivity.this, SurfActivity.class);
+        i.putExtra("url",url);
+        startActivity(i);
     }
 }

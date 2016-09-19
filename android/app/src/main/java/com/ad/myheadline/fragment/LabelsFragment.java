@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Created by AD on 2016/8/21.
  */
-public class LabelsFragment extends ListFragment {
+public class LabelsFragment extends android.support.v4.app.ListFragment {
     private ListView myListView;
     private MyLabelAdapter myAdapter;
     @Override
