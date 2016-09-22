@@ -13,6 +13,8 @@ import com.ad.myheadline.R;
 
 import java.util.List;
 
+import static com.ad.myheadline.R.color.colorAccent;
+
 /**
  * Created by AD on 2016/8/20.
  */

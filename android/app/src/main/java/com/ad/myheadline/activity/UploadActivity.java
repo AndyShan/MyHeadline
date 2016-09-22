@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.ad.myheadline.R;
+import com.ad.myheadline.model.NewsLab;
+import com.ad.myheadline.network.ApiRequest;
 import com.tt.whorlviewlibrary.WhorlView;
 
 /**
  * Created by AD on 2016/8/30.
  */
 public class UploadActivity extends AppCompatActivity {
+    private Boolean FLAG = false;
     private FloatingActionButton fab;
     private WhorlView whorlView;
     private EditText title_edittext;
@@ -29,8 +32,19 @@ public class UploadActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whorlView.start();
-                whorlView.setVisibility(View.VISIBLE);
+                String keyword = title_edittext.getText().toString() + " " + content_edittext.getText().toString();
+                if (FLAG == true) {
+                    whorlView.stop();
+                    whorlView.setVisibility(View.INVISIBLE);
+                    FLAG = false;
+                } else {
+                    whorlView.start();
+                    whorlView.setVisibility(View.VISIBLE);
+                    Runnable r = new ApiRequest(1, keyword);
+                    Thread t = new Thread(r);
+                    t.start();
+                    FLAG = true;
+                }
             }
         });
     }

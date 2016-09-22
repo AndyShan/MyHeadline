@@ -39,6 +39,14 @@ public class ApiRequest extends Activity implements Runnable {
             }
             NewsLab.get().setKeywordQureyResult(s);
         }
+        if (api_code == 1) {
+            String s = null;
+            try {
+                s = upLoad(keyword);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /*
@@ -54,6 +62,17 @@ public class ApiRequest extends Activity implements Runnable {
         return result;
     }
 
+    /*
+    上传新闻
+     */
+    private String upLoad(String keyword) throws UnsupportedEncodingException {
+        String result = "";
+        if (keyword != null) {
+            String url = "http://192.168.199.184:5000/api/v1.0/upload/" + URLEncoder.encode(keyword.trim(), "utf-8").replace("+","%20");
+            result = getRequest(url);
+        }
+        return result;
+    }
     /*
     发送get请求
      */

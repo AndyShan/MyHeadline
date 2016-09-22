@@ -154,11 +154,11 @@ public class MainActivity extends AppCompatActivity
                         transaction.replace(R.id.content, firstPageFragment);
                         break;
                     case 1:
-                        if (hotPageFragment == null)
+                        if (firstPageFragment == null)
                         {
-                            hotPageFragment = new HotPageFragment();
+                            firstPageFragment = new FirstPageFragment();
                         }
-                        transaction.replace(R.id.content, hotPageFragment);
+                        transaction.replace(R.id.content, firstPageFragment);
                         break;
                     case 3:
                         if (labelsFragment == null)

@@ -37,7 +37,6 @@ public class LabelsFragment extends android.support.v4.app.ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_labels, container,false);
-        myListView = (ListView) view.findViewById(android.R.id.list);
         return view;
     }
 
@@ -52,6 +51,7 @@ public class LabelsFragment extends android.support.v4.app.ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l,v,position,id);
+        Log.i("click", "onListItemClick: ");
     }
     /*
     初始化获取每一个item的方法

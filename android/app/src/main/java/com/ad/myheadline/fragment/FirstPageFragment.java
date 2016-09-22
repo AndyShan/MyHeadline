@@ -92,10 +92,20 @@ public class FirstPageFragment extends android.support.v4.app.ListFragment{
                 JSONObject ob = jsonArray.getJSONObject(i);
                 ArrayList<String> labels = new ArrayList();
                 JSONArray labelArray = ob.getJSONArray("labels");
-                for (int j = 0; j < 3; j++) {
-                    labels.add(labelArray.getString(j));
+                if (labelArray.length() > 2) {
+                    for (int j = 0; j < 3; j++) {
+                        labels.add(labelArray.getString(j));
+                    }
                 }
-                MyCard card = new MyCard("新闻", ob.getString("title"), ob.getString("time"), labels, ob.getString("href"));
+
+                MyCard card;
+                if (!ob.getString("href").equals("0")) {
+                    card = new MyCard("新闻", ob.getString("title"), ob.getString("time"), labels, ob.getString("href"));
+                } else {
+                    ArrayList<String> l = new ArrayList<>();
+                    l.add("紧急");
+                    card = new MyCard("通知", ob.getString("title"), "天津理工大学", l, "一般");
+                }
                 myCards.add(card);
 
             }
