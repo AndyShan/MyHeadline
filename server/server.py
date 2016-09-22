@@ -88,8 +88,8 @@ def GetNowTime():
     return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
 
 if __name__ == "__main__":
-    # while True:
-    #     yule()
-    #     caijing()
-    #     time.sleep(60 * 60)
-    fashion()
+    while True:
+        yule()
+        caijing()
+        time.sleep(60 * 60)
+    # fashion()
