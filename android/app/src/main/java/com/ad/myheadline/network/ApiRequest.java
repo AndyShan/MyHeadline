@@ -55,7 +55,7 @@ public class ApiRequest extends Activity implements Runnable {
     private String getRequestKeyWord(String keyword) throws UnsupportedEncodingException {
         String result = "";
         if (keyword != null) {
-            String url = "http://192.168.199.184:5000/api/v1.0/keyword/" + URLEncoder.encode(keyword.trim(), "utf-8").replace("+","%20");
+            String url = "http://192.168.199.186:5000/api/v1.0/keyword/" + URLEncoder.encode(keyword.trim(), "utf-8").replace("+","%20");
             Log.d("url",url);
             result = getRequest(url);
         }
@@ -68,7 +68,7 @@ public class ApiRequest extends Activity implements Runnable {
     private String upLoad(String keyword) throws UnsupportedEncodingException {
         String result = "";
         if (keyword != null) {
-            String url = "http://192.168.199.184:5000/api/v1.0/upload/" + URLEncoder.encode(keyword.trim(), "utf-8").replace("+","%20");
+            String url = "http://192.168.199.186:5000/api/v1.0/upload/" + URLEncoder.encode(keyword.trim(), "utf-8").replace("+","%20");
             result = getRequest(url);
         }
         return result;

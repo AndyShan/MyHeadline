@@ -19,18 +19,21 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 
 import com.ad.myheadline.R;
+import com.ad.myheadline.fragment.ClasFragment;
 import com.ad.myheadline.fragment.FirstPageFragment;
 import com.ad.myheadline.fragment.HotPageFragment;
 import com.ad.myheadline.fragment.LabelsFragment;
 import com.ad.myheadline.model.MyCard;
+import com.ad.myheadline.model.MyClas;
 import com.ad.myheadline.model.NewsLab;
 import com.srx.widget.TabBarView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener ,FirstPageFragment.onFirstPageCallBack{
+        implements NavigationView.OnNavigationItemSelectedListener ,FirstPageFragment.onFirstPageCallBack, ClasFragment.onClasPageCallBack{
     private FirstPageFragment firstPageFragment;
     private HotPageFragment hotPageFragment;
     private LabelsFragment labelsFragment;
+    private ClasFragment clasFragment;
     private TabBarView mTabBarView;
 
     @Override
@@ -161,11 +164,11 @@ public class MainActivity extends AppCompatActivity
                         transaction.replace(R.id.content, firstPageFragment);
                         break;
                     case 3:
-                        if (labelsFragment == null)
+                        if (clasFragment == null)
                         {
-                            labelsFragment = new LabelsFragment();
+                            clasFragment = new ClasFragment();
                         }
-                        transaction.replace(R.id.content,labelsFragment);
+                        transaction.replace(R.id.content,clasFragment);
                         break;
                 }
                 transaction.commit();
@@ -208,6 +211,14 @@ public class MainActivity extends AppCompatActivity
         String url = mCard.getmHref();
         Intent i = new Intent(MainActivity.this, SurfActivity.class);
         i.putExtra("url",url);
+        startActivity(i);
+    }
+
+    @Override
+    public void onClasCallBack(MyClas clas) {
+        String url = clas.getUrl();
+        Intent i = new Intent(MainActivity.this, SurfActivity.class);
+        i.putExtra("url", url);
         startActivity(i);
     }
 }

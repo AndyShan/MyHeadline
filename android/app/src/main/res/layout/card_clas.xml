@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:descendantFocusability="blocksDescendants">
+    <ImageView
+    android:layout_weight="1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_clas_image"
+    android:src="@drawable/clas_1"    />
+    <TextView
+        android:id="@+id/card_clas_name"
+        android:layout_weight="6"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="娱乐"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>
