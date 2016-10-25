@@ -1,13 +1,10 @@
 package com.ad.myheadline.activity;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,13 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 
 import com.ad.myheadline.R;
 import com.ad.myheadline.fragment.ClasFragment;
 import com.ad.myheadline.fragment.FirstPageFragment;
-import com.ad.myheadline.fragment.HotPageFragment;
-import com.ad.myheadline.fragment.LabelsFragment;
+import com.ad.myheadline.fragment.NoticeFragment;
 import com.ad.myheadline.model.MyCard;
 import com.ad.myheadline.model.MyClas;
 import com.ad.myheadline.model.NewsLab;
@@ -31,9 +26,8 @@ import com.srx.widget.TabBarView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener ,FirstPageFragment.onFirstPageCallBack, ClasFragment.onClasPageCallBack{
     private FirstPageFragment firstPageFragment;
-    private HotPageFragment hotPageFragment;
-    private LabelsFragment labelsFragment;
     private ClasFragment clasFragment;
+    private NoticeFragment noticeFragment;
     private TabBarView mTabBarView;
 
     @Override
@@ -157,11 +151,11 @@ public class MainActivity extends AppCompatActivity
                         transaction.replace(R.id.content, firstPageFragment);
                         break;
                     case 1:
-                        if (firstPageFragment == null)
+                        if (noticeFragment == null)
                         {
-                            firstPageFragment = new FirstPageFragment();
+                            noticeFragment = new NoticeFragment();
                         }
-                        transaction.replace(R.id.content, firstPageFragment);
+                        transaction.replace(R.id.content, noticeFragment);
                         break;
                     case 3:
                         if (clasFragment == null)

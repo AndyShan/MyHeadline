@@ -23,7 +23,6 @@ import java.util.List;
  */
 
 public class ClasFragment extends ListFragment {
-    private ListView myListView;
     private MyClasAdapter myClasAdapter;
     private List<MyClas> myClases;
 
@@ -58,10 +57,10 @@ public class ClasFragment extends ListFragment {
     private List<MyClas> getItems() {
         List<MyClas> myClases = new ArrayList<>();
         myClases.add(new MyClas("娱乐","http://mil.sina.cn/?vt=4&pos=3",R.drawable.clas_1));
-        myClases.add(new MyClas("娱乐","http://baidu.com",R.drawable.clas_1));
-        myClases.add(new MyClas("娱乐","http://mil.sina.cn/?vt=4&pos=3",R.drawable.clas_1));
-        myClases.add(new MyClas("娱乐","http://mil.sina.cn/?vt=4&pos=3",R.drawable.clas_1));
-        myClases.add(new MyClas("娱乐","http://mil.sina.cn/?vt=4&pos=3",R.drawable.clas_1));
+        myClases.add(new MyClas("财经","http://finance.sina.cn/b.d.html",R.drawable.clas_2));
+        myClases.add(new MyClas("体育","http://sports.sina.cn/?vt=4&pos=108",R.drawable.clas_3));
+        myClases.add(new MyClas("军事","http://mil.sina.cn/?vt=4&pos=108",R.drawable.clas_4));
+        myClases.add(new MyClas("科技","http://tech.sina.cn/?vt=4&pos=108",R.drawable.clas_5));
         return myClases;
     }
 
